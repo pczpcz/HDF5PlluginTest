@@ -1,0 +1,36 @@
+# 忽略构建目录
+build/
+build-*/
+*.build/
+
+# 忽略IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 忽略编译输出
+*.o
+*.so
+*.a
+*.dylib
+
+# 忽略测试输出
+*.gcda
+*.gcno
+coverage/
+
+# 忽略数据文件（除了样本数据）
+data/*.hdf5
+!data/sample.hdf5
+
+# 忽略结果文件
+results/*
+
+# 忽略git文件
+.git/
+.gitignore
+
+# 忽略临时文件
+*.tmp
+*.temp

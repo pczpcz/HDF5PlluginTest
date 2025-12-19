@@ -1,0 +1,44 @@
+services:
+  hdf5-compression-bench:
+    build: .
+    container_name: hdf5-compression-bench
+    env_file:
+      - .env  # 加载环境变量文件
+    volumes:
+      - ./data:/workspace/data
+      - ./results:/workspace/results
+      - ./scripts:/workspace/scripts
+    working_dir: /workspace
+    # 使用环境变量构建完整的命令行
+    command: >
+      sh -c "
+        # 如果设置了APP_ARGS且不是help，直接使用
+        # 根据APP_COMMAND构建命令行
+        echo \"使用APP_COMMAND: $$APP_COMMAND\";
+        CMD_LINE=\"$$APP_COMMAND\";
+        
+        # 根据不同的命令添加相应的参数
+        case \"$$APP_COMMAND\" in
+          test)
+            [ -n \"$$INPUT_FILE\" ] && CMD_LINE=\"$$CMD_LINE --input $$INPUT_FILE\";
+            [ -n \"$$OUTPUT_DIR\" ] && CMD_LINE=\"$$CMD_LINE --dir $$OUTPUT_DIR\";
+            [ -n \"$$FILTERS\" ] && CMD_LINE=\"$$CMD_LINE --filters $$FILTERS\";
+            [ -n \"$$LEVELS\" ] && CMD_LINE=\"$$CMD_LINE --levels $$LEVELS\";
+            [ \"$$VERBOSE\" = 'true' ] && CMD_LINE=\"$$CMD_LINE --verbose\";
+            ;;
+          help|version|'')
+            # help和version命令不需要额外参数
+            ;;
+          *)
+            echo \"未知命令: $$APP_COMMAND\";
+            CMD_LINE=\"help\";
+            ;;
+        esac
+        
+        echo \"执行命令: ./build/bin/hdf5_compression_bench $$CMD_LINE\";
+        ./build/bin/hdf5_compression_bench $$CMD_LINE;
+        
+        # 等待用户输入quit退出（如果程序没有内置等待功能）
+        echo \"\";
+        echo \"程序执行完成。";
+      "

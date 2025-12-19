@@ -1,0 +1,61 @@
+//1.基础命令
+docker poll
+docker rmi
+docker images
+docker run
+docker run -d
+docker ps
+docker run -p 宿主端口80:容器端口80 -v 宿主文件目录/容器文件目录 nginx
+docker rm -f 容器名   															//删除正在运行的容器
+docker run -e 环境变量 容器名												        //设置容器的环境变量	
+docker run stop
+docker run start
+docker run -a
+docker inspect
+docker logs 镜像名称
+
+docker builder prune -f  //清理缓存
+
+docker run -p 8888:8888/udp 镜像名称
+
+docker rmi -f $(docker images -q)  //删除所有镜像
+docker stop $(docker ps -aq) //停止所有容器
+
+//调试
+docker exec -it 容器名 /bin/bash
+docker run -it 镜像名 /bin/bash
+
+//2. 构建并运行进行
+编写dockerfile
+docker build -t 用户名/镜像名称 .
+docker run -p 80:80 镜像名称
+推动docker HUB： docker login  &  docker push 用户名/镜像名称
+
+//3. 网络映射
+docker run -d --network host 镜像名称      //镜像直接使用宿主的网络环境
+
+//4. docker compose  轻量级的容器编排技术
+编写docker-compose.yaml文件
+docker compose up -d
+docker compose start
+docker compose stop
+
+{
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB",
+      "enabled": true
+    }
+  },
+  "experimental": false
+}
+
+{
+  "registry-mirrors": [
+    "https://docker.1ms.run",
+    "https://docker-0.unsee.tech",
+    "https://docker.m.daocloud.io"
+  ],
+  "features": { "buildkit": true }
+}
+
