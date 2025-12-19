@@ -62,7 +62,7 @@ cd hdf5-compression-bench
 # 准备测试数据,执行脚本合并数据
 bash merge_hdf5.sh
 
-# 配置测试参数
+# 配置测试参数（根目录的.env文件）
 INPUT_FILE=PBG08621_pass_6c7986d6_167483a9_0.hdf5
 FILTERS=GZIP,ZSTD,BLOSC,VBZ,SHUFFLE,SZIP
 
