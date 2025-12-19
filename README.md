@@ -6,6 +6,7 @@
 
 ## 功能结构
 
+```
 hdf5-compression-bench/
 ├── CMakeLists.txt # 主 CMake 配置文件
 ├── Dockerfile # Docker 构建配置
@@ -26,6 +27,7 @@ hdf5-compression-bench/
 ├── example/ # 第三方插件的使用示例程序，不参与构建
 ├── HOMEWORK_README.md # 任务输入文档
 └── README.md # 项目概述文档
+```
 
 ## 功能特性
 
